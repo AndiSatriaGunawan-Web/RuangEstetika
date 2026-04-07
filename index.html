@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes, maximum-scale=1.0">
+    <meta name="theme-color" content="#FDF9F2">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="description" content="RuangEstetika - Platform e-commerce furnitur premium dengan animasi smooth">
+    <title>RuangEstetika | Furniture Premium</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <!-- GSAP CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="styles.css">
+    
+    <style>
+        .page { display: none; }
+        .page.active-page { display: block; animation: fadeIn 0.4s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .preloader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #FDF9F2; z-index: 9999; display: flex; align-items: center; justify-content: center; transition: opacity 0.5s; }
+        .preloader.hide { opacity: 0; visibility: hidden; }
+        .preloader-spinner { width: 50px; height: 50px; border: 3px solid #9CAF88; border-top-color: #8B5A2B; border-radius: 50%; animation: spin 1s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .animate-fade-up, .animate-scale, .animate-slide-left, .animate-slide-right { opacity: 0; }
+    </style>
+</head>
+<body>
+    <!-- Preloader -->
+    <div class="preloader" id="preloader">
+        <div class="preloader-spinner"></div>
+        <p style="margin-top: 16px;">Memuat RuangEstetika...</p>
+    </div>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Floating WhatsApp -->
+    <a href="https://wa.me/628991009585" class="whatsapp-float" target="_blank" rel="noopener">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="header-top">
+            <div class="container">
+                <div class="marquee">
+                    <span>✨ Gratis Ongkir Seluruh Indonesia ✨</span>
+                    <span>🎉 Diskon 70% untuk Member Baru 🎉</span>
+                    <span>🚚 Pengiriman Cepat 1-3 Hari 🚚</span>
+                    <span>💎 Garansi 30 Hari 💎</span>
+                    <span>⭐ Rating 4.9 dari 25.000+ Pelanggan ⭐</span>
+                </div>
+            </div>
+        </div>
+        
+        <nav class="navbar">
+            <div class="container">
+                <div class="nav-container">
+                    <a href="#" class="logo" id="logoHome">
+                        <svg width="35" height="35" viewBox="0 0 100 100" fill="none">
+                            <rect x="25" y="35" width="50" height="45" rx="8" fill="#9CAF88"/>
+                            <rect x="35" y="20" width="30" height="20" rx="4" fill="#8B5A2B"/>
+                            <rect x="20" y="55" width="12" height="25" rx="3" fill="#8B5A2B"/>
+                            <rect x="68" y="55" width="12" height="25" rx="3" fill="#8B5A2B"/>
+                        </svg>
+                        <span>RuangEstetika</span>
+                    </a>
+
+                    <div class="search-bar desktop-only">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="searchInput" placeholder="Cari produk...">
+                        <button id="searchBtn"><i class="fas fa-arrow-right"></i></button>
+                    </div>
+
+                    <div class="nav-icons">
+                        <div class="nav-icon desktop-only" id="wishlistIcon">
+                            <i class="far fa-heart"></i>
+                            <span class="badge" id="wishlistCount">0</span>
+                        </div>
+                        <div class="nav-icon cart-icon" id="cartIcon">
+                            <i class="fas fa-shopping-bag"></i>
+                            <span class="badge" id="cartCount">0</span>
+                        </div>
+                        <div class="nav-icon desktop-only" id="userIcon">
+                            <i class="far fa-user"></i>
+                        </div>
+                        <button class="mobile-menu-btn" id="menuBtn">
+                            <i class="fas fa-bars"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="search-bar mobile-only" id="mobileSearch">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="mobileSearchInput" placeholder="Cari produk...">
+                </div>
+
+                <div class="mobile-menu" id="mobileMenu">
+                    <div class="mobile-menu-header">
+                        <div class="mobile-menu-logo">
+                            <svg width="30" height="30" viewBox="0 0 100 100" fill="none">
+                                <rect x="25" y="35" width="50" height="45" rx="8" fill="#9CAF88"/>
+                                <rect x="35" y="20" width="30" height="20" rx="4" fill="#8B5A2B"/>
+                            </svg>
+                            <span>RuangEstetika</span>
+                        </div>
+                        <button class="close-menu" id="closeMenuBtn">✕</button>
+                    </div>
+                    <ul class="mobile-nav-links">
+                        <li><a href="#home" data-page="home" class="mobile-nav-link active">🏠 Beranda</a></li>
+                        <li><a href="#catalog" data-page="catalog" class="mobile-nav-link">📦 Katalog</a></li>
+                        <li><a href="#promo" data-page="promo" class="mobile-nav-link">🔥 Promo</a></li>
+                        <li><a href="#inspiration" data-page="inspiration" class="mobile-nav-link">✨ Inspirasi</a></li>
+                        <li><a href="#testimonial" data-page="testimonial" class="mobile-nav-link">⭐ Testimoni</a></li>
+                        <li><a href="#contact" data-page="contact" class="mobile-nav-link">📞 Kontak</a></li>
+                    </ul>
+                    <div class="mobile-menu-footer">
+                        <a href="#" id="mobileWishlist"><i class="far fa-heart"></i> Wishlist <span id="mobileWishCount" class="mobile-badge">0</span></a>
+                        <a href="#" id="mobileCart"><i class="fas fa-shopping-bag"></i> Keranjang <span id="mobileCartCount" class="mobile-badge">0</span></a>
+                        <a href="#" id="mobileAccount"><i class="far fa-user"></i> Akun Saya</a>
+                        <a href="tel:+628991009585"><i class="fas fa-phone"></i> Call Center</a>
+                    </div>
+                </div>
+
+                <ul class="nav-links desktop-only">
+                    <li><a href="#home" data-page="home" class="nav-link active">Beranda</a></li>
+                    <li><a href="#catalog" data-page="catalog" class="nav-link">Katalog</a></li>
+                    <li><a href="#promo" data-page="promo" class="nav-link">Promo</a></li>
+                    <li><a href="#inspiration" data-page="inspiration" class="nav-link">Inspirasi</a></li>
+                    <li><a href="#testimonial" data-page="testimonial" class="nav-link">Testimoni</a></li>
+                    <li><a href="#contact" data-page="contact" class="nav-link">Kontak</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main id="mainContent">
+        <!-- HOME PAGE -->
+        <div id="homePage" class="page active-page">
+            <section class="hero">
+                <div class="container">
+                    <div class="hero-grid">
+                        <div class="hero-text animate-fade-up">
+                            <div class="hero-badge">✨ Special Collection 2026</div>
+                            <h1>Ciptakan <span class="highlight">Ruang Estetika</span> dengan Sentuhan Kayu Asli</h1>
+                            <p>Temukan koleksi furnitur premium yang memadukan keindahan alami dengan desain kontemporer untuk rumah impian Anda.</p>
+                            <div class="hero-buttons">
+                                <button class="btn-primary" id="shopNowBtn">Belanja Sekarang →</button>
+                                <button class="btn-outline" id="exploreBtn">Lihat Koleksi</button>
+                            </div>
+                            <div class="hero-stats">
+                                <div><span class="stat-num" data-target="7262">0</span><span>Produk</span></div>
+                                <div><span class="stat-num" data-target="588625">0</span><span>Pelanggan</span></div>
+                                <div><span class="stat-num" data-target="578262">0</span><span>Puas</span></div>
+                            </div>
+                        </div>
+                        <div class="hero-image animate-scale">
+                            <img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=500" alt="Furniture" loading="eager">
+                            <div class="floating-card card1">⭐ 4.9 Rating</div>
+                            <div class="floating-card card2">🚚 Free Shipping</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="categories">
+                <div class="container">
+                    <div class="section-header animate-fade-up">
+                        <span class="section-tag">Kategori</span>
+                        <h2>Jelajahi <span class="highlight">Koleksi</span> Kami</h2>
+                    </div>
+                    <div class="categories-grid" id="categoriesGrid"></div>
+                </div>
+            </section>
+
+            <section class="best-sellers">
+                <div class="container">
+                    <div class="section-header animate-fade-up">
+                        <span class="section-tag">Best Seller</span>
+                        <h2>Produk <span class="highlight">Terlaris</span></h2>
+                    </div>
+                    <div class="products-grid" id="bestSellerGrid"></div>
+                </div>
+            </section>
+
+            <section class="features">
+                <div class="container">
+                    <div class="features-grid">
+                        <div class="feature animate-scale"><i class="fas fa-leaf"></i><h3>Material Premium</h3><p>Kayu pilihan berkualitas</p></div>
+                        <div class="feature animate-scale"><i class="fas fa-palette"></i><h3>Desain Eksklusif</h3><p>Desainer interior ternama</p></div>
+                        <div class="feature animate-scale"><i class="fas fa-truck"></i><h3>Gratis Ongkir</h3><p>Seluruh Indonesia</p></div>
+                        <div class="feature animate-scale"><i class="fas fa-shield-alt"></i><h3>Garansi 30 Hari</h3><p>Pengembalian mudah</p></div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- CATALOG PAGE -->
+        <div id="catalogPage" class="page">
+            <div class="container">
+                <div class="catalog-header animate-fade-up">
+                    <h1>Koleksi Produk</h1>
+                    <p>Temukan furnitur impian Anda dari berbagai kategori</p>
+                </div>
+
+                <div class="filter-bar animate-fade-up">
+                    <button class="filter-toggle" id="filterToggle">
+                        <i class="fas fa-filter"></i> Filter
+                    </button>
+                    <div class="filter-options" id="filterOptions">
+                        <div class="filter-group">
+                            <label>Budget Maksimal</label>
+                            <input type="range" id="budgetSlider" min="0" max="5000000" step="100000" value="5000000">
+                            <span id="budgetValue">Rp 5.000.000</span>
+                        </div>
+                        <div class="filter-group">
+                            <label>Kategori</label>
+                            <select id="categorySelect">
+                                <option value="all">Semua</option>
+                                <option value="Meja">Meja</option>
+                                <option value="Kursi">Kursi</option>
+                                <option value="Sofa">Sofa</option>
+                                <option value="Kasur">Kasur</option>
+                                <option value="Lampu">Lampu</option>
+                                <option value="Dekorasi">Dekorasi</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label>Urutkan</label>
+                            <select id="sortSelect">
+                                <option value="default">Default</option>
+                                <option value="price-asc">Termurah</option>
+                                <option value="price-desc">Termahal</option>
+                            </select>
+                        </div>
+                        <button class="reset-filter" id="resetFilter">Reset Filter</button>
+                    </div>
+                    <div class="results-count" id="resultsCount"></div>
+                </div>
+
+                <div class="products-grid" id="catalogGrid"></div>
+                <div class="load-more" id="loadMoreBtn">
+                    <button class="btn-outline">Muat Lebih Banyak <i class="fas fa-arrow-down"></i></button>
+                </div>
+            </div>
+        </div>
+
+        <!-- PROMO PAGE -->
+        <div id="promoPage" class="page">
+            <div class="container">
+                <div class="promo-banner animate-scale">
+                    <div class="promo-badge">🔥 FLASH SALE 🔥</div>
+                    <h2>Diskon hingga <span class="highlight">70%</span></h2>
+                    <p>Waktu terbatas! Dapatkan furnitur impian dengan harga spesial</p>
+                    <div class="countdown" id="countdown"></div>
+                </div>
+                <div class="section-header animate-fade-up">
+                    <h2>Produk Promo Terbatas</h2>
+                    <p>Jangan sampai kehabisan stok!</p>
+                </div>
+                <div class="products-grid" id="promoGrid"></div>
+            </div>
+        </div>
+
+        <!-- INSPIRATION PAGE -->
+        <div id="inspirationPage" class="page">
+            <div class="container">
+                <div class="inspiration-header animate-fade-up">
+                    <h1>Inspirasi Ruangan</h1>
+                    <p>Dapatkan ide dekorasi untuk rumah impian Anda</p>
+                </div>
+                <div class="inspiration-grid" id="inspirationGrid"></div>
+            </div>
+        </div>
+
+        <!-- TESTIMONIAL PAGE -->
+        <div id="testimonialPage" class="page">
+            <div class="container">
+                <div class="testimonial-header animate-fade-up">
+                    <h1>Apa Kata Mereka?</h1>
+                    <p>Lebih dari 25.000 pelanggan telah mempercayakan kebutuhan furnitur mereka</p>
+                </div>
+                <div class="testimonial-grid" id="testimonialGrid"></div>
+            </div>
+        </div>
+
+        <!-- CONTACT PAGE -->
+        <div id="contactPage" class="page">
+            <div class="container">
+                <div class="contact-header animate-fade-up">
+                    <h1>Hubungi Kami</h1>
+                    <p>Kami siap membantu Anda 24/7</p>
+                </div>
+                <div class="contact-grid">
+                    <div class="contact-info">
+                        <div class="contact-card animate-slide-left">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <div><h3>Alamat</h3><p>Jl. Adonis Samad No. 4, Kalimantan Tengah, Indonesia</p></div>
+                        </div>
+                        <div class="contact-card animate-slide-left">
+                            <i class="fas fa-phone-alt"></i>
+                            <div><h3>Telepon</h3><p>+62 899 1009 585</p><p>+62 838 3604 4017</p></div>
+                        </div>
+                        <div class="contact-card animate-slide-right">
+                            <i class="fas fa-envelope"></i>
+                            <div><h3>Email</h3><p>info@ruangestetika.com</p><p>support@andisatriag621.com</p></div>
+                        </div>
+                        <div class="contact-card animate-slide-right">
+                            <i class="fas fa-clock"></i>
+                            <div><h3>Jam Operasional</h3><p>Senin - Jumat: 09:00 - 21:00</p><p>Sabtu - Minggu: 10:00 - 18:00</p></div>
+                        </div>
+                    </div>
+                    <form class="contact-form animate-scale" id="contactForm">
+                        <h3>Kirim Pesan</h3>
+                        <input type="text" placeholder="Nama Lengkap" required>
+                        <input type="email" placeholder="Email" required>
+                        <input type="text" placeholder="No. Telepon">
+                        <textarea placeholder="Pesan Anda..." rows="4" required></textarea>
+                        <button type="submit" class="btn-primary">Kirim Pesan <i class="fas fa-paper-plane"></i></button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col animate-fade-up">
+                    <div class="footer-logo">
+                        <svg width="40" height="40" viewBox="0 0 100 100" fill="none">
+                            <rect x="25" y="35" width="50" height="45" rx="8" fill="#9CAF88"/>
+                            <rect x="35" y="20" width="30" height="20" rx="4" fill="#8B5A2B"/>
+                        </svg>
+                        <div>
+                            <h3>RuangEstetika</h3>
+                            <p>Premium Furniture</p>
+                        </div>
+                    </div>
+                    <p class="footer-desc">Menyediakan furnitur berkualitas tinggi dengan desain elegan untuk menciptakan ruang hunian yang estetis dan nyaman.</p>
+                    <div class="footer-social">
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-pinterest-p"></i></a>
+                        <a href="#"><i class="fab fa-tiktok"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col animate-fade-up">
+                    <h4>Informasi</h4>
+                    <ul>
+                        <li><a href="#" data-page="home">Tentang Kami</a></li>
+                        <li><a href="#">Kebijakan Privasi</a></li>
+                        <li><a href="#">Syarat & Ketentuan</a></li>
+                        <li><a href="#">Pengiriman & Pengembalian</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col animate-fade-up">
+                    <h4>Layanan Pelanggan</h4>
+                    <ul>
+                        <li><a href="#" data-page="contact">Hubungi Kami</a></li>
+                        <li><a href="#">Tracking Pesanan</a></li>
+                        <li><a href="#">Garansi Produk</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col animate-fade-up">
+                    <h4>Newsletter</h4>
+                    <p>Dapatkan promo eksklusif dan info terbaru</p>
+                    <div class="newsletter-form">
+                        <input type="email" placeholder="Email Anda">
+                        <button><i class="fas fa-paper-plane"></i></button>
+                    </div>
+                    <div class="payment-methods">
+                        <i class="fab fa-cc-visa"></i>
+                        <i class="fab fa-cc-mastercard"></i>
+                        <i class="fab fa-cc-amex"></i>
+                        <i class="fab fa-cc-paypal"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 RuangEstetika | Andi Satria Gunawan. All rights reserved.</p>
+                <div class="footer-links">
+                    <a href="#">Sitemap</a>
+                    <a href="#">Privacy</a>
+                    <a href="#">Terms</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bottom Navigation (Mobile) -->
+    <div class="bottom-nav" id="bottomNav">
+        <a href="#home" data-page="home" class="bottom-nav-item active">
+            <i class="fas fa-home"></i><span>Beranda</span>
+        </a>
+        <a href="#catalog" data-page="catalog" class="bottom-nav-item">
+            <i class="fas fa-search"></i><span>Katalog</span>
+        </a>
+        <a href="#promo" data-page="promo" class="bottom-nav-item">
+            <i class="fas fa-fire"></i><span>Promo</span>
+        </a>
+        <a href="#inspiration" data-page="inspiration" class="bottom-nav-item">
+            <i class="fas fa-lightbulb"></i><span>Inspirasi</span>
+        </a>
+        <a href="#testimonial" data-page="testimonial" class="bottom-nav-item">
+            <i class="fas fa-star"></i><span>Testimoni</span>
+        </a>
+        <a href="#contact" data-page="contact" class="bottom-nav-item">
+            <i class="fas fa-headset"></i><span>Kontak</span>
+        </a>
+    </div>
+
+    <!-- Cart Drawer -->
+    <div class="cart-overlay" id="cartOverlay">
+        <div class="cart-drawer">
+            <div class="cart-header">
+                <h3><i class="fas fa-shopping-bag"></i> Keranjang Saya</h3>
+                <button class="close-cart" id="closeCartBtn">✕</button>
+            </div>
+            <div class="cart-items" id="cartItems"></div>
+            <div class="cart-footer">
+                <div class="cart-total">Total: <span id="cartTotal">Rp 0</span></div>
+                <button class="btn-primary checkout-btn" id="checkoutBtn">Checkout <i class="fas fa-arrow-right"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Product Modal -->
+    <div class="modal" id="productModal">
+        <div class="modal-content">
+            <button class="modal-close" id="closeModalBtn">✕</button>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+
+    <!-- Wishlist Modal -->
+    <div class="modal" id="wishlistModal">
+        <div class="modal-content">
+            <button class="modal-close" id="closeWishlistModal">✕</button>
+            <h3 style="margin-bottom: 20px;"><i class="far fa-heart"></i> Wishlist Saya</h3>
+            <div id="wishlistBody"></div>
+        </div>
+    </div>
+    
+    <!-- Login/Register Modal -->
+<div class="modal" id="accountModal">
+    <div class="modal-content account-modal">
+        <button class="modal-close" id="closeAccountModal">✕</button>
+        <div class="account-tabs">
+            <button class="account-tab active" data-tab="login">Masuk</button>
+            <button class="account-tab" data-tab="register">Daftar</button>
+        </div>
+        
+        <!-- Login Form -->
+        <div id="loginForm" class="account-form active">
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" id="loginEmail" placeholder="masukkan email Anda">
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" id="loginPassword" placeholder="masukkan password">
+            </div>
+            <button class="btn-primary" id="loginBtn">Masuk</button>
+            <p class="form-footer">Belum punya akun? <span class="switch-tab" data-tab="register">Daftar sekarang</span></p>
+        </div>
+        
+        <!-- Register Form -->
+        <div id="registerForm" class="account-form">
+            <div class="form-group">
+                <label>Nama Lengkap</label>
+                <input type="text" id="registerName" placeholder="nama lengkap">
+            </div>
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" id="registerEmail" placeholder="email">
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" id="registerPassword" placeholder="minimal 6 karakter">
+            </div>
+            <div class="form-group">
+                <label>Konfirmasi Password</label>
+                <input type="password" id="registerConfirmPassword" placeholder="konfirmasi password">
+            </div>
+            <button class="btn-primary" id="registerBtn">Daftar</button>
+            <p class="form-footer">Sudah punya akun? <span class="switch-tab" data-tab="login">Masuk di sini</span></p>
+        </div>
+    </div>
+</div>
+
+<!-- Account Dashboard Modal -->
+<div class="modal" id="dashboardModal">
+    <div class="modal-content dashboard-modal">
+        <button class="modal-close" id="closeDashboardModal">✕</button>
+        <div class="dashboard-container">
+            <div class="dashboard-sidebar">
+                <div class="user-avatar" id="userAvatar">
+                    <i class="fas fa-user-circle"></i>
+                </div>
+                <div class="user-name" id="dashboardUserName">User</div>
+                <div class="user-email" id="dashboardUserEmail">user@example.com</div>
+                <nav class="dashboard-nav">
+                    <button class="dashboard-nav-item active" data-dashboard="profile">
+                        <i class="fas fa-user"></i> Profil Saya
+                    </button>
+                    <button class="dashboard-nav-item" data-dashboard="orders">
+                        <i class="fas fa-shopping-bag"></i> Pesanan Saya
+                    </button>
+                    <button class="dashboard-nav-item" data-dashboard="address">
+                        <i class="fas fa-map-marker-alt"></i> Alamat Saya
+                    </button>
+                    <button class="dashboard-nav-item" data-dashboard="wishlist">
+                        <i class="fas fa-heart"></i> Wishlist
+                    </button>
+                    <button class="dashboard-nav-item logout-btn" id="dashboardLogout">
+                        <i class="fas fa-sign-out-alt"></i> Keluar
+                    </button>
+                </nav>
+            </div>
+            <div class="dashboard-content">
+                <!-- Profile Section -->
+                <div id="profileSection" class="dashboard-section active">
+                    <h3>Profil Saya</h3>
+                    <div class="profile-form">
+                        <div class="form-group">
+                            <label>Nama Lengkap</label>
+                            <input type="text" id="profileName" placeholder="Nama lengkap">
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" id="profileEmail" placeholder="Email" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label>No. Telepon</label>
+                            <input type="tel" id="profilePhone" placeholder="No. telepon">
+                        </div>
+                        <div class="form-group">
+                            <label>Tanggal Lahir</label>
+                            <input type="date" id="profileBirthdate">
+                        </div>
+                        <button class="btn-primary" id="updateProfileBtn">Update Profil</button>
+                    </div>
+                </div>
+                
+                <!-- Orders Section -->
+                <div id="ordersSection" class="dashboard-section">
+                    <h3>Pesanan Saya</h3>
+                    <div id="ordersList" class="orders-list">
+                        <div class="empty-orders">
+                            <i class="fas fa-box-open"></i>
+                            <p>Belum ada pesanan</p>
+                            <button class="btn-outline" id="startShoppingBtn">Mulai Belanja</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Address Section -->
+                <div id="addressSection" class="dashboard-section">
+                    <h3>Alamat Saya</h3>
+                    <div class="address-form">
+                        <div class="form-group">
+                            <label>Alamat Lengkap</label>
+                            <textarea id="addressFull" rows="3" placeholder="Alamat lengkap"></textarea>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Kota</label>
+                                <input type="text" id="addressCity" placeholder="Kota">
+                            </div>
+                            <div class="form-group">
+                                <label>Kode Pos</label>
+                                <input type="text" id="addressPostal" placeholder="Kode pos">
+                            </div>
+                        </div>
+                        <button class="btn-primary" id="updateAddressBtn">Simpan Alamat</button>
+                    </div>
+                    <div class="saved-address" id="savedAddress"></div>
+                </div>
+                
+                <!-- Wishlist Section in Dashboard -->
+                <div id="dashboardWishlistSection" class="dashboard-section">
+                    <h3>Wishlist Saya</h3>
+                    <div id="dashboardWishlistList" class="wishlist-dashboard-list"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
